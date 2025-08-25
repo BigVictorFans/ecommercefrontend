@@ -54,7 +54,7 @@ const CartPage = () => {
   // 4) Render the cart items in a table
   return (
     <>
-      <Header />
+      <Header props="cart" />
       <Box sx={{ py: 4 }}>
           {/* table */}
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

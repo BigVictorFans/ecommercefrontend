@@ -57,13 +57,12 @@ const Products = () => {
   // add to cart
   const handleAddToCart = (product) => {
     addToCart(product);
-
     toast.success("Product has been added to cart");
   }
 
   return (
     <>
-      <Header />
+      <Header props="products" />
       <Container>
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
           <Typography
