@@ -44,25 +44,25 @@ const Products = () => {
     }).then(async (result) => {
       // once user confirm, then we delete the product
       if (result.isConfirmed) {
-        //delete the product using backend
+        // delete product at the backend
         await deleteProduct(id);
-        // remove the product from the state
-        setProducts(products.filter((p) => p._id !== id));
+
+        // method #1: remove from the state manually
+        // delete product from the state
+        // setProducts(products.filter((p) => p._id !== id));
+
+        // method #2: get the new data from the backend
+        const updatedProducts = await getProducts(category, page);
+        setProducts(updatedProducts);
+
         toast.success("Product has been deleted");
       }
     });
   };
 
-  
-  // add to cart
-  const handleAddToCart = (product) => {
-    addToCart(product);
-    toast.success("Product has been added to cart");
-  }
-
   return (
     <>
-      <Header props="products" />
+      <Header current="home" />
       <Container>
         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
           <Typography
@@ -133,13 +133,11 @@ const Products = () => {
                   </Box>
                 </CardContent>
                 <CardActions sx={{ display: "block", px: 3, pb: 3 }}>
-                  <Button 
+                  <Button
                     variant="contained"
                     color="primary"
                     fullWidth
-                    onClick={() => {
-                      handleAddToCart(product);
-                    }}
+                    onClick={() => addToCart(product)}
                   >
                     Add To Cart
                   </Button>

@@ -1,13 +1,11 @@
-import { Button } from "@mui/material";
+import { Link } from "react-router";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useLocation } from "react-router";
 
 const Header = (props) => {
-  const {current} = props;
-  const location = useLocation();
+  const { current, title = "Welcome To My Store" } = props;
   return (
-    <>
     <Box
       sx={{
         py: 4,
@@ -22,15 +20,34 @@ const Header = (props) => {
           fontWeight: "700",
         }}
       >
-        {location.pathname === "/cart" ? "Cart" : "Welcome to My Homepage"}
+        {title}
       </Typography>
-      {/* buttons */}
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 3 }}>
-        <Button variant="contained" sx={{backgroundColor:"lightblue", color:"#5C95D3." }} href="/">Home</Button>
-        <Button variant="contained" sx={{color:"white", backgroundColor:"#5C95D3."}} href="/cart">Cart</Button>
+      <Box
+        sx={{ display: "flex", gap: "10px", justifyContent: "center", mt: 2 }}
+      >
+        <Button
+          component={Link}
+          to="/"
+          variant={current === "home" ? "contained" : "outlined"}
+        >
+          Home
+        </Button>
+        <Button
+          component={Link}
+          to="/cart"
+          variant={current === "cart" ? "contained" : "outlined"}
+        >
+          Cart
+        </Button>
+        <Button
+          component={Link}
+          to="/orders"
+          variant={current === "orders" ? "contained" : "outlined"}
+        >
+          My Orders
+        </Button>
       </Box>
     </Box>
-    </>
   );
 };
 

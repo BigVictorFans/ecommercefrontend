@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5123/";
+import { API_URL } from "./constants.js";
 
 export async function getProducts(category, page = 1) {
   const response = await axios.get(
