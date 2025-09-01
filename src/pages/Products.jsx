@@ -19,6 +19,7 @@ import { getProducts, deleteProduct } from "../utils/api_products";
 import Swal from "sweetalert2";
 import { toast } from "sonner";
 import { addToCart } from "../utils/cart";
+import { getCategories } from "../utils/api_categories";
 import { API_URL } from "../utils/constants";
 
 const Products = () => {
@@ -27,12 +28,17 @@ const Products = () => {
   // to track which page the user is in
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState("all");
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     getProducts(category, page).then((data) => {
       setProducts(data);
     });
   }, [category, page]);
+
+  useEffect(() => {
+    getCategories().then((data) => setCategories(data));
+  }, []);
 
   const handleProductDelete = async (id) => {
     Swal.fire({
@@ -108,10 +114,9 @@ const Products = () => {
               }}
             >
               <MenuItem value="all">All</MenuItem>
-              <MenuItem value={"Consoles"}>Consoles</MenuItem>
-              <MenuItem value={"Games"}>Games</MenuItem>
-              <MenuItem value={"Accessories"}>Accessories</MenuItem>
-              <MenuItem value={"Subscriptions"}>Subscriptions</MenuItem>
+              {categories.map((cat) => (
+                <MenuItem value={cat._id}>{cat.label}</MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Box>
@@ -126,7 +131,7 @@ const Products = () => {
                     API_URL +
                     (product.image
                       ? product.image
-                      : "uploads/default_image.jpg")
+                      : "uploads/default_image.png")
                   }
                 />
                 <CardContent sx={{ p: 3 }}>
